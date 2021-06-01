@@ -1,8 +1,8 @@
 package com.example.smartphone_shop.services;
 
-import com.example.smartphone_shop.models.Cart;
+import com.example.smartphone_shop.model.Cart;
 import com.example.smartphone_shop.repository.CartRepository;
-import lombok.NonNull;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 public class CartService {
 
     private CartRepository cartRepository;
-    private SmartphonesService smartphonesService;
+    private SmartphoneService smartphoneService;
 
     @Autowired
-    public CartService(CartRepository cartRepository, SmartphonesService smartphonesService){
+    public CartService(CartRepository cartRepository, SmartphoneService smartphoneService){
         this.cartRepository = cartRepository;
-        this.smartphonesService = smartphonesService;
+        this.smartphoneService = smartphoneService;
 
     }
 
-    public void save(@NonNull Cart cart) {
+    public void save(@NotNull Cart cart) {
 
     }
 

@@ -1,7 +1,5 @@
-package com.example.smartphone_shop.models;
+package com.example.smartphone_shop.model;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,8 +9,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Smartphone_list")
-public class Smartphones {
+@Table(name = "smartphone_list")
+public class Smartphone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +22,8 @@ public class Smartphones {
     @Column(nullable = false)
     private String smartphonePrice;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name= "cart_id")
     private Cart cart;
 
 }
