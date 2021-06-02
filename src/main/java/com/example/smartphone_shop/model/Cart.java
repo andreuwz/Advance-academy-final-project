@@ -1,7 +1,9 @@
 package com.example.smartphone_shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -9,21 +11,26 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "purchased_items")
+@Table(name = "cart_items")
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
     private String cartName;
 
-    @OneToOne
-    private User users;
+    @OneToOne(mappedBy = "cart")
+    private User user;
 
-    @OneToMany(mappedBy = "cart")
-    private List<Smartphone> smartphones;
+    private LocalDateTime cartCreationDate;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<Smartphone> smartphone;
 
 }

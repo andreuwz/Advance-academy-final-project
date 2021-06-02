@@ -1,49 +1,54 @@
 package com.example.smartphone_shop.services;
 
+import com.example.smartphone_shop.exception.SmartphoneNotFoundException;
 import com.example.smartphone_shop.model.Smartphone;
-import com.example.smartphone_shop.repository.SmartphonesRepository;
+import com.example.smartphone_shop.repository.SmartphoneRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
-@Transactional // this creates one physical transaction, so the program has "normal"
-//code sequence. For more info check google
 public class SmartphoneService {
 
-    private SmartphonesRepository smartphonesRepository;
+    private SmartphoneRepository smartphoneRepository;
 
     @Autowired
-    public SmartphoneService(SmartphonesRepository smartphonesRepository) {
-        this.smartphonesRepository=smartphonesRepository;
-    }
-    //here we write the standard CRUD operations, for the service classes
-
-    public Set<Smartphone> findAll() {
-        return smartphonesRepository.findAll()
-                .stream()
-                .collect(Collectors.toSet());
-        // or return new HashSet<>(smartphonesRepository.findAll());
+    public SmartphoneService(SmartphoneRepository smartphoneRepository) {
+        this.smartphoneRepository = smartphoneRepository;
     }
 
-    public void save(@NonNull Smartphone smartphone) {
-        smartphonesRepository.save(smartphone);
+    public List<Smartphone> findAllSmartphones() {
+        return smartphoneRepository.findAll();
     }
 
-    public Smartphone findById(@NonNull Long id) {
-        return smartphonesRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new);
+    public void saveSmartphone(@NonNull Smartphone smartphone) {
+        smartphoneRepository.save(smartphone);
+        System.out.println("Smartphone saved successfully!");
     }
 
-
-
-    public void deleteById(@NonNull Long id) {
-        smartphonesRepository.deleteById(id);
+    public void deleteSmartphoneByName(@NonNull String smartphonename) {
+        smartphoneRepository.deleteBySmartphoneName(smartphonename);
+        System.out.println("Smartphone deleted successfully!");
     }
 
+    public Smartphone findByName(@NonNull String smartphoneName) {
+        Smartphone foundSmartphoneN = smartphoneRepository.findBySmartphoneName(smartphoneName)
+                .orElseThrow(() -> new SmartphoneNotFoundException(String.format("Smartphone with name %s not found",
+                        smartphoneName)));
+        return foundSmartphoneN;
+    }
+
+    public Smartphone findByPrice(@NonNull String smartphonePrice) {
+        Smartphone foundSmarphoneP = smartphoneRepository.findBySmartphonePrice(smartphonePrice)
+                .orElseThrow(() -> new SmartphoneNotFoundException(String.format("Smartphone with price %s not found",
+                        smartphonePrice)));
+        return foundSmarphoneP;
+    }
+
+    public void deleteAllSmartphones(){
+        smartphoneRepository.deleteAll();
+        System.out.println("All smartphones deleted successfully!");
+    }
 
 }

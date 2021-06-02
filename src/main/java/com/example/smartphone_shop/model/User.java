@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,14 +17,25 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
-    private String firstName;
+    private String firstname;
 
     @Column(nullable = false)
-    private String lastName;
+    private String lastname;
 
-    @OneToOne
+    @Column(unique = true,nullable = false)
+    private String password;
+
+    @Column(unique = true, nullable = false)
+    private String emailAddress;
+
+    private LocalDateTime userCreationDate;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch =FetchType.EAGER)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
+
 }
