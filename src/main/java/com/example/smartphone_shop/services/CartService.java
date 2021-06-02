@@ -1,6 +1,6 @@
 package com.example.smartphone_shop.services;
 
-import com.example.smartphone_shop.exception.CartNotFoundException;
+import com.example.smartphone_shop.exception.RecordNotFoundException;
 import com.example.smartphone_shop.model.Cart;
 import com.example.smartphone_shop.repository.CartRepository;
 import lombok.NonNull;
@@ -34,13 +34,13 @@ public class CartService {
 
     public Cart findCartById(@NonNull Long id) {
         Cart foundCartI = cartRepository.findById(id)
-                .orElseThrow(() -> new CartNotFoundException(String.format("Cart with id %s not found", id)));
+                .orElseThrow(() -> new RecordNotFoundException(String.format("Cart with id %s not found", id)));
         return foundCartI;
     }
 
     public Cart findCartByName(@NonNull String cartName) {
         Cart foundCartN = cartRepository.findByCartName(cartName)
-                .orElseThrow(() -> new CartNotFoundException(String.format("Cart with name %s not found", cartName)));
+                .orElseThrow(() -> new RecordNotFoundException(String.format("Cart with name %s not found", cartName)));
         return foundCartN;
     }
 

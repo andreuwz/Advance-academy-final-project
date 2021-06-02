@@ -1,6 +1,6 @@
 package com.example.smartphone_shop.services;
 
-import com.example.smartphone_shop.exception.SmartphoneNotFoundException;
+import com.example.smartphone_shop.exception.RecordNotFoundException;
 import com.example.smartphone_shop.model.Smartphone;
 import com.example.smartphone_shop.repository.SmartphoneRepository;
 import lombok.NonNull;
@@ -34,14 +34,14 @@ public class SmartphoneService {
 
     public Smartphone findByName(@NonNull String smartphoneName) {
         Smartphone foundSmartphoneN = smartphoneRepository.findBySmartphoneName(smartphoneName)
-                .orElseThrow(() -> new SmartphoneNotFoundException(String.format("Smartphone with name %s not found",
+                .orElseThrow(() -> new RecordNotFoundException(String.format("Smartphone with name %s not found",
                         smartphoneName)));
         return foundSmartphoneN;
     }
 
     public Smartphone findByPrice(@NonNull String smartphonePrice) {
         Smartphone foundSmarphoneP = smartphoneRepository.findBySmartphonePrice(smartphonePrice)
-                .orElseThrow(() -> new SmartphoneNotFoundException(String.format("Smartphone with price %s not found",
+                .orElseThrow(() -> new RecordNotFoundException(String.format("Smartphone with price %s not found",
                         smartphonePrice)));
         return foundSmarphoneP;
     }

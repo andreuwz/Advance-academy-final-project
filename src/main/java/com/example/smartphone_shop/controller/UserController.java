@@ -6,9 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
+@Transactional
 public class UserController {
 
     private UserService userService;
@@ -28,28 +30,29 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(value = "/firstname/{firstname}")
+    @GetMapping(value = "/userfirstname/{firstname}")
     public ResponseEntity<User> findUserByFirstname(@PathVariable String firstname) {
         return ResponseEntity.ok(userService.findUserByFirstname(firstname));
     }
-    @GetMapping(value = "/lastname/{lastname}")
+
+    @GetMapping(value = "/userlastname/{lastname}")
     public ResponseEntity<User> findUserByLastname(@PathVariable String lastname) {
         return ResponseEntity.ok(userService.findUserByLastname(lastname));
     }
 
-    @GetMapping(value = "/email/{email}")
+    @GetMapping(value = "/useremail/{email}")
     public ResponseEntity<User> findUserByEmail(@PathVariable String email) {
         return ResponseEntity.ok(userService.findByEmailAddress(email));
     }
 
-    @DeleteMapping(value = "/delete/{firstname}")
-    public ResponseEntity<HttpStatus> deleteByFirstname(String firstname) {
+    @DeleteMapping(value = "/userdelete/{firstname}")
+    public ResponseEntity<HttpStatus> deleteByFirstname(@PathVariable String firstname) {
         userService.deleteUserByFirstname(firstname);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/delete/deleteall")
-    public ResponseEntity<HttpStatus> deleteAllusers() {
+    @DeleteMapping(value = "/usersdelete/deleteall")
+    public ResponseEntity<HttpStatus> deleteAllUsers() {
         userService.deleteAllUsers();
         return ResponseEntity.ok().build();
     }
