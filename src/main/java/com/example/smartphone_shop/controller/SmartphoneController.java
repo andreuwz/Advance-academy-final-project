@@ -26,20 +26,20 @@ public class SmartphoneController {
         return ResponseEntity.ok(smartphoneService.findAllSmartphones());
     }
 
-    @PostMapping
-    public ResponseEntity<HttpStatus> saveSmartphone(@RequestBody Smartphone smartphone) {
+    @PostMapping(value = "/savesmartphone")
+    public ResponseEntity<HttpStatus> addSmartphone(@RequestBody Smartphone smartphone) {
         smartphoneService.saveSmartphone(smartphone);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(value = "/smartphonename/{smartphonename}")
-    public ResponseEntity<Smartphone> findBySmartphoneName(@PathVariable String smartphonename) {
-        return ResponseEntity.ok(smartphoneService.findByName(smartphonename));
+    @GetMapping(value = "/smartphonename/{sname}")
+    public ResponseEntity<Smartphone> findBySmartphoneName(@PathVariable String sname) {
+        return ResponseEntity.ok(smartphoneService.findByName(sname));
     }
 
-    @GetMapping(value = "/smartphoneprice/{smartphoneprice}")
-    public ResponseEntity<Smartphone> findBySmartphonePrice(@PathVariable String smartphoneprice) {
-        return ResponseEntity.ok(smartphoneService.findByPrice(smartphoneprice));
+    @GetMapping(value = "/smartphoneprice/{sprice}")
+    public ResponseEntity<Smartphone> findBySmartphonePrice(@PathVariable String sprice) {
+        return ResponseEntity.ok(smartphoneService.findByPrice(sprice));
     }
 
     @DeleteMapping(value = "/smartphonedelete/{deletename}")

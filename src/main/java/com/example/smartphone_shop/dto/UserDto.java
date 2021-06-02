@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,13 +15,12 @@ public class UserDto {
 
     // data transfer object - without the Id and password attributes from the "parent" class User
 
-    @Column(nullable = false)
+    private Long id;
+
     private String firstname;
 
-    @Column(nullable = false)
-    private String lastname;
+    private LocalDateTime userDtoDateOfCreation;
 
-    @Column(unique = true, nullable = false)
     private String emailAddress;
 
 }

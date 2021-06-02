@@ -2,7 +2,6 @@ package com.example.smartphone_shop.controller;
 
 
 import com.example.smartphone_shop.model.Cart;
-import com.example.smartphone_shop.model.User;
 import com.example.smartphone_shop.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +27,8 @@ public class CartController {
         return ResponseEntity.ok(cartService.returnAllCarts());
     }
 
-    @PostMapping
-    public ResponseEntity<HttpStatus> saveCart(@RequestBody Cart cart) {
+    @PostMapping(value = "/savecart")
+    public ResponseEntity<HttpStatus> addCart(@RequestBody Cart cart) {
         cartService.saveCart(cart);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -55,8 +54,5 @@ public class CartController {
         cartService.deleteAllCarts();
         return ResponseEntity.ok().build();
     }
-
-
-
 
 }

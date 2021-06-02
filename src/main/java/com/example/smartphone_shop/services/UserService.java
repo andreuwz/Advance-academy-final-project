@@ -1,5 +1,6 @@
 package com.example.smartphone_shop.services;
 
+import com.example.smartphone_shop.dto.UserDto;
 import com.example.smartphone_shop.exception.RecordNotFoundException;
 import com.example.smartphone_shop.model.User;
 import com.example.smartphone_shop.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,30 +34,51 @@ public class UserService {
         System.out.println("User deleted successfully");
     }
 
-    public User findUserByFirstname(@NonNull String firstname) {
+    public UserDto findUserByFirstname(@NonNull String firstname) {
          User foundUserF = userRepository.findByFirstname(firstname)
                  .orElseThrow(() -> new RecordNotFoundException(String.format("User not found with firstname: %s",
                          firstname)));
-         return foundUserF;
+        UserDto userDtoF = new UserDto();
+        userDtoF.setFirstname(foundUserF.getFirstname());
+        userDtoF.setUserDtoDateOfCreation(foundUserF.getUserCreationDate());
+        userDtoF.setEmailAddress(foundUserF.getEmailAddress());
+         return userDtoF;
     }
 
-    public User findUserByLastname(@NonNull String lastname) {
+    public UserDto findUserByLastname(@NonNull String lastname) {
         User foundUserL = userRepository.findByLastname(lastname)
                 .orElseThrow(() -> new RecordNotFoundException(String.format("User not found with lastname: %s",
                         lastname)));
-                return foundUserL;
+        UserDto userDtoL = new UserDto();
+        userDtoL.setFirstname(foundUserL.getFirstname());
+        userDtoL.setUserDtoDateOfCreation(foundUserL.getUserCreationDate());
+        userDtoL.setEmailAddress(foundUserL.getEmailAddress());
+        return userDtoL;
+
     }
 
-    public User findByEmailAddress(@NonNull String address) {
+    public UserDto findByEmailAddress(@NonNull String address) {
         User foundUserE = userRepository.findByEmailAddress(address)
                 .orElseThrow(() -> new RecordNotFoundException(String.format("User not found with email: %s",
                         address)));
-        return foundUserE;
+        UserDto userDtoE = new UserDto();
+        userDtoE.setFirstname(foundUserE.getFirstname());
+        userDtoE.setUserDtoDateOfCreation(foundUserE.getUserCreationDate());
+        userDtoE.setEmailAddress(foundUserE.getEmailAddress());
+        return userDtoE;
     }
 
-    public List<User> returnAllUsers(){
+    public List<UserDto> returnAllUsers(){
         List<User> allUsers = userRepository.findAll();
-        return allUsers;
+        List<UserDto> DtoUsers = new ArrayList<>();
+        for (User oldUsers : allUsers) {
+            UserDto userDto = new UserDto();
+            userDto.setUserDtoDateOfCreation(oldUsers.getUserCreationDate());
+            userDto.setId(oldUsers.getId());
+            userDto.setFirstname(oldUsers.getFirstname());
+            userDto.setEmailAddress(oldUsers.getEmailAddress());
+        }
+        return DtoUsers;
     }
 
     public void deleteAllUsers() {
